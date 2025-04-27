@@ -13,6 +13,7 @@ class JTTS:
         self.SAMPLE_RATE = SAMPLE_RATE
         self.ttsQ = Queue()
 
+
         # Suppress warnings
         warnings.filterwarnings(
             "ignore",
@@ -25,6 +26,10 @@ class JTTS:
         # Start the TTS pipeline
         self.pipeline = KPipeline(lang_code="a", repo_id="hexgrad/Kokoro-82M")
         print("Loaded TTS Model")
+
+        #Start the TTS Thread
+        self.queThread = threading.Thread(target=self.startTTS, daemon=True)
+        self.queThread.start()
 
     def trim_audio(self, audio: Tensor, threshold: float = 1e-06) -> Tensor:
         """
@@ -95,11 +100,10 @@ class JTTS:
 
     def requestStop(self) -> None:
         self.ttsQ.put(None)
+        self.queThread.join()
 
 if __name__ == "__main__":
     tts = JTTS()
-    ttsThread = threading.Thread(target=tts.startTTS, daemon=True)
-    ttsThread.start()
 
     # tts.speak(
     """
@@ -109,7 +113,7 @@ if __name__ == "__main__":
     Yellow, black. Yellow, black. Yellow, black. Yellow, black.
     Ooh, black and yellow!
     """
-     # )
+    # )
 
     while True:
         inp = input()
@@ -119,6 +123,5 @@ if __name__ == "__main__":
         tts.speak(inp)
 
     tts.requestStop()
-    ttsThread.join()
     print("Done")
 

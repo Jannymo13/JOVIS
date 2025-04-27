@@ -1,10 +1,11 @@
 from RealtimeSTT import AudioToTextRecorder
 import keyboard
-def startP2TLoop(func)->None:
+
+def P2TLoop(func)->None:
 
     recorder = AudioToTextRecorder(model="small", compute_type="float32")
 
-    print("\n\n\nStarted!")
+    print("\n\n\nStarted STT!")
     while True:
         if keyboard.is_pressed('f9'):
             print("Starting Recording")
@@ -19,4 +20,4 @@ def startP2TLoop(func)->None:
             return
 
 if __name__ == '__main__':
-    startP2TLoop(print)
+    P2TLoop(print)
