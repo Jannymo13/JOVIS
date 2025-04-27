@@ -96,28 +96,29 @@ class JTTS:
     def requestStop(self) -> None:
         self.ttsQ.put(None)
 
+if __name__ == "__main__":
+    tts = JTTS()
+    ttsThread = threading.Thread(target=tts.startTTS, daemon=True)
+    ttsThread.start()
 
-tts = JTTS()
-ttsThread = threading.Thread(target=tts.startTTS, daemon=True)
-ttsThread.start()
+    # tts.speak(
+    """
+    According to all known laws of aviation, there is no way a bee should be able to fly. 
+    Its wings are too small to get its fat little body off the ground. 
+    The bee, of course, flies anyway because bees don't care what humans think is impossible.
+    Yellow, black. Yellow, black. Yellow, black. Yellow, black.
+    Ooh, black and yellow!
+    """
+     # )
 
-# tts.speak(
-"""
-According to all known laws of aviation, there is no way a bee should be able to fly. 
-Its wings are too small to get its fat little body off the ground. 
-The bee, of course, flies anyway because bees don't care what humans think is impossible.
-Yellow, black. Yellow, black. Yellow, black. Yellow, black.
-Ooh, black and yellow!
-"""
- # )
+    while True:
+        inp = input()
+        if inp == "exit":
+            print("Exiting...")
+            break
+        tts.speak(inp)
 
-while True:
-    inp = input()
-    if inp == "exit":
-        print("Exiting...")
-        break
-    tts.speak(inp)
+    tts.requestStop()
+    ttsThread.join()
+    print("Done")
 
-tts.requestStop()
-ttsThread.join()
-print("Done")
