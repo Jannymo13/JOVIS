@@ -104,7 +104,6 @@ class JTTS:
 
 if __name__ == "__main__":
     tts = JTTS()
-
     # tts.speak(
     """
     According to all known laws of aviation, there is no way a bee should be able to fly. 
@@ -117,7 +116,7 @@ if __name__ == "__main__":
 
     while True:
         inp = input()
-        if inp == "exit":
+        if inp == "\exit":
             print("Exiting...")
             break
         tts.speak(inp)
