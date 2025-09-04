@@ -2,7 +2,7 @@
 A local DIY virtual assistant
 
 ### Install Instuctions
-Currently only works on linux, working on proting to other platforms
+Currently only works on linux, working on porting to other platforms
 create a python3.11 venv
 install python3.11 dev tools
 `sudo apt install python3.11-dev`
